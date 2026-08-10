@@ -1,0 +1,18 @@
+{
+  "store": "STARBUCKS 상암디지털큐브점",
+  "purchased_at": "2026-07-25",
+  "items": [
+    {
+      "name": "트리플 치즈 베이글",
+      "price": 3900,
+      "quantity": 1,
+      "category": "카페/간식"
+    },
+    {
+      "name": "ㄴ따뜻하게 데움",
+      "price": 0,
+      "quantity": 1,
+      "category": "카페/간식"
+    }
+  ]
+}

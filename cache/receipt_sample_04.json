@@ -1,0 +1,12 @@
+{
+  "store": "선천주유소",
+  "purchased_at": "2023-07-30",
+  "items": [
+    {
+      "name": "선천주유소",
+      "price": 95000,
+      "quantity": 1,
+      "category": "교통"
+    }
+  ]
+}

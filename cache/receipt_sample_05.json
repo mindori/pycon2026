@@ -1,0 +1,12 @@
+{
+  "store": "미미",
+  "purchased_at": "2026-07-25",
+  "items": [
+    {
+      "name": "미미",
+      "price": 13000,
+      "quantity": 1,
+      "category": "식비"
+    }
+  ]
+}

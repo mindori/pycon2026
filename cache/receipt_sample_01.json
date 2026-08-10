@@ -1,0 +1,18 @@
+{
+  "store": "다이닝",
+  "purchased_at": "2026-07-25",
+  "items": [
+    {
+      "name": "아메리칸쿠키 - 오리지널 다크초코",
+      "price": 3800,
+      "quantity": 1,
+      "category": "카페/간식"
+    },
+    {
+      "name": "아메리칸쿠키 - 에스프레소 피칸",
+      "price": 3800,
+      "quantity": 1,
+      "category": "카페/간식"
+    }
+  ]
+}

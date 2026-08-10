@@ -1,0 +1,12 @@
+{
+  "store": "칠칠켄터키",
+  "purchased_at": "2024-02-24",
+  "items": [
+    {
+      "name": "칠칠켄터키",
+      "price": 10000,
+      "quantity": 1,
+      "category": "식비"
+    }
+  ]
+}
