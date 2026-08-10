@@ -46,6 +46,22 @@
 두 문서를 마치면 `uv run python check_env.py`가 모두 ✅를 출력해야 합니다.
 막히는 부분이 있으면 8/16(일) 저녁 온라인 사전 점검에서 도와드립니다.
 
+## 당일 교재
+
+당일 실습은 아래 교재를 보며 진행합니다. **미리 읽어 오실 필요는 없습니다.**
+
+**[docs/handbook/](docs/handbook/README.md)** — 막별 핸즈온 교재
+
+| 막 | 문서 |
+|---|---|
+| 0막 (20분) | [환경 점검과 첫 호출](docs/handbook/00-환경점검.md) |
+| 1막 (30분) | [본다 — 영수증을 데이터로](docs/handbook/01-본다.md) |
+| 2막 (10분) | [정리한다 — 가계부 만들기](docs/handbook/02-정리한다.md) |
+| 3막 (25분) | [토론한다 — 페르소나와 종료 조건](docs/handbook/03-토론한다.md) |
+| 4막 (15분) | [판정관과 피날레](docs/handbook/04-판정.md) |
+
+진도가 밀렸을 때 혼자 따라잡는 방법이 각 막 문서 맨 위에 있습니다.
+
 ## 실행 방법
 
 ```bash
@@ -74,8 +90,11 @@ uv run python main.py         # receipts/ 폴더의 샘플 영수증으로 실�
 ```
 budget_battle/    핵심 패키지 (config, client, vision, ledger, personas, debate, judge)
 main.py           CLI 엔트리
+app.py            피날레용 Streamlit 앱
 check_env.py      사전 환경 진단 스크립트
 docs/prework/     참가자용 사전 공지물
+docs/handbook/    당일 막별 핸즈온 교재
+steps/            막별 완성 스냅샷 (진도를 놓쳤을 때 복구용)
 tests/            테스트
 ```
 

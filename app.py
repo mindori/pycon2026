@@ -17,6 +17,7 @@ st.caption("영수증을 올리면 AI 둘이 당신의 지갑을 두고 토론�
 uploads = st.file_uploader(
     "영수증 사진", type=["jpg", "jpeg", "png", "webp"], accept_multiple_files=True
 )
+st.caption("아이폰으로 찍은 사진(HEIC)은 JPG로 변환해서 올려 주세요.")
 rounds = st.slider("토론 라운드", min_value=1, max_value=4, value=2)
 st.caption(
     f"라운드를 올려도 호출 상한 {config.MAX_CALLS}턴에 걸리면 거기서 멈춥니다 — "
@@ -26,8 +27,11 @@ st.caption(
 if st.button("배틀 시작", disabled=not uploads):
     with tempfile.TemporaryDirectory() as tmpdir:
         paths = []
-        for upload in uploads:
-            path = Path(tmpdir) / upload.name
+        for index, upload in enumerate(uploads):
+            # 파일명 앞에 번호를 붙이고 디렉토리 성분을 떼어낸다. 같은 이름의
+            # 영수증 두 장이 서로를 덮어써 한 장이 두 번 처리되는 것을 막고,
+            # 업로드 이름에 섞인 경로가 임시 폴더 밖을 가리키는 것도 막는다.
+            path = Path(tmpdir) / f"{index}_{Path(upload.name).name}"
             path.write_bytes(upload.getvalue())
             paths.append(path)
 
@@ -68,5 +72,9 @@ if st.button("배틀 시작", disabled=not uploads):
                 "- 계속 실패하면 강사에게 백업 API 키를 요청하세요."
             )
             st.caption(f"원인: {error}")
+        except ValueError as error:
+            # vision._mime_type이 지원하지 않는 확장자에 던지는 예외.
+            # ValueError는 RuntimeError의 하위가 아니라 아래 핸들러에 안 걸린다.
+            st.error(str(error))
         except RuntimeError as error:
             st.error(str(error))

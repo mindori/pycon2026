@@ -1,5 +1,6 @@
 import io
 import urllib.error
+import urllib.request
 
 import pytest
 
@@ -71,9 +72,7 @@ def test_verify_key_works_success(monkeypatch):
 
 
 def test_verify_key_works_http_error(monkeypatch):
-    monkeypatch.setattr(
-        check_env.urllib.request, "urlopen", _fake_urlopen_http_error(403)
-    )
+    monkeypatch.setattr(check_env.urllib.request, "urlopen", _fake_urlopen_http_error(403))
     ok, reason = check_env._verify_key_works("fake-key")
     assert ok is False
     assert "403" in reason
@@ -95,21 +94,17 @@ def test_verify_model_responds_success(monkeypatch):
 
 def test_verify_model_responds_404_mentions_model_id(monkeypatch):
     """모델이 없어졌을 때(신규 사용자 404)를 키 오류와 구분해 알려줘야 한다."""
-    monkeypatch.setattr(
-        check_env.urllib.request, "urlopen", _fake_urlopen_http_error(404)
-    )
+    monkeypatch.setattr(check_env.urllib.request, "urlopen", _fake_urlopen_http_error(404))
     ok, reason = check_env._verify_model_responds("fake-key")
     assert ok is False
     assert check_env.MODEL_ID in reason
 
 
 def test_verify_model_responds_other_http_error(monkeypatch):
-    monkeypatch.setattr(
-        check_env.urllib.request, "urlopen", _fake_urlopen_http_error(429)
-    )
+    monkeypatch.setattr(check_env.urllib.request, "urlopen", _fake_urlopen_http_error(500))
     ok, reason = check_env._verify_model_responds("fake-key")
     assert ok is False
-    assert "429" in reason
+    assert "500" in reason
 
 
 def test_verify_model_responds_network_error(monkeypatch):
@@ -119,20 +114,63 @@ def test_verify_model_responds_network_error(monkeypatch):
     assert "네트워크" in reason
 
 
+def test_verify_model_responds_429_is_a_pass_not_a_failure(monkeypatch):
+    """429(분당 요청 한도 초과)는 키가 인증을 통과했다는 증거다. client.py는
+    이 순간을 재시도로 넘기지만 check_env.py는 한 번만 때리므로, 이걸 실패로
+    잡으면 멀쩡한 키를 가진 참가자에게 '키가 안 됩니다'라는 거짓 경보를 준다."""
+    monkeypatch.setattr(check_env.urllib.request, "urlopen", _fake_urlopen_http_error(429))
+    ok, detail = check_env._verify_model_responds("fake-key")
+    assert ok is True
+    assert "한도" in detail
+
+
+@pytest.mark.parametrize("code", [401, 403])
+def test_verify_model_responds_401_403_report_key_rejected(monkeypatch, code):
+    monkeypatch.setattr(check_env.urllib.request, "urlopen", _fake_urlopen_http_error(code))
+    ok, reason = check_env._verify_model_responds("fake-key")
+    assert ok is False
+    assert "거부" in reason
+    assert str(code) in reason
+
+
 def test_main_returns_zero_when_all_pass(monkeypatch, tmp_path, capsys):
     env_path = tmp_path / ".env"
     env_path.write_text("GOOGLE_API_KEY=real-key\n", encoding="utf-8")
     monkeypatch.setattr(check_env, "__file__", str(tmp_path / "check_env.py"))
     monkeypatch.setattr(check_env.shutil, "which", lambda name: "/usr/bin/uv")
     monkeypatch.setattr(check_env.urllib.request, "urlopen", _fake_urlopen_success)
-    monkeypatch.setattr(
-        check_env, "python_version_ok", lambda version: True
-    )
+    monkeypatch.setattr(check_env, "python_version_ok", lambda version: True)
 
     exit_code = check_env.main()
 
     assert exit_code == 0
     output = capsys.readouterr().out
+    assert "모두 통과했습니다" in output
+
+
+def test_main_passes_with_caveat_when_model_call_is_rate_limited(monkeypatch, tmp_path, capsys):
+    """429가 나도 전체 진단은 통과해야 한다. 키 확인(GET)은 성공시키고
+    모델 호출(POST)만 429를 내는 가짜 urlopen으로 두 요청을 구분한다."""
+    env_path = tmp_path / ".env"
+    env_path.write_text("GOOGLE_API_KEY=real-key\n", encoding="utf-8")
+    monkeypatch.setattr(check_env, "__file__", str(tmp_path / "check_env.py"))
+    monkeypatch.setattr(check_env.shutil, "which", lambda name: "/usr/bin/uv")
+    monkeypatch.setattr(check_env, "python_version_ok", lambda version: True)
+
+    def _fake_urlopen(*args, **kwargs):
+        target = args[0] if args else kwargs.get("url")
+        if isinstance(target, urllib.request.Request):
+            raise urllib.error.HTTPError("http://example.com", 429, "rate limited", {}, None)
+        return _FakeHTTPResponse(b'{"ok": true}')
+
+    monkeypatch.setattr(check_env.urllib.request, "urlopen", _fake_urlopen)
+
+    exit_code = check_env.main()
+
+    assert exit_code == 0
+    output = capsys.readouterr().out
+    assert "❌" not in output
+    assert "한도" in output
     assert "모두 통과했습니다" in output
 
 
