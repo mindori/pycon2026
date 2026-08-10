@@ -1,0 +1,20 @@
+[project]
+name = "ai-budget-battle"
+version = "0.1.0"
+description = "PyCon Korea 2026 튜토리얼 — 영수증을 던지면 AI 둘이 토론하는 AI 가계부"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-genai>=2.14.0",
+    "pydantic>=2.13.4",
+    "python-dotenv>=1.2.2",
+    "streamlit>=1.60.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
