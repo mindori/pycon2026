@@ -75,6 +75,18 @@ cd pycon2026-main
 uv sync
 ```
 
+### `unsupported operand type(s) for |` 라는 에러가 나요
+
+코드 문제가 아니라 **가상환경이 깨진 것**입니다. 폴더 이름을 바꿨거나 다른 곳으로
+옮겼을 때 생깁니다. `models.py`를 잘못 친 것처럼 보이지만 아닙니다.
+
+```bash
+rm -rf .venv
+uv sync
+```
+
+이렇게 가상환경을 다시 만들면 해결됩니다.
+
 ## 4) `.env` 파일 준비
 
 [API 키 발급 가이드](01-api-key.md)를 따라 `.env` 파일에 키를 넣어두지
