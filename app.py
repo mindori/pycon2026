@@ -47,14 +47,18 @@ if st.button("배틀 시작", disabled=not uploads):
             st.text(summary)
 
             st.subheader("토론")
-            with st.spinner("AI 둘이 싸우는 중..."):
-                turns = debate.run_debate(
-                    summary, personas.DEFAULT_PERSONAS, max_rounds=rounds
-                )
             avatars = {personas.FRUGAL.name: "👵", personas.FLEX.name: "💃"}
-            for turn in turns:
+
+            def render(turn):
+                """발언이 하나 끝날 때마다 즉시 화면에 붙인다."""
                 with st.chat_message(turn.speaker, avatar=avatars.get(turn.speaker, "🤖")):
                     st.markdown(f"**{turn.speaker}**\n\n{turn.message}")
+
+            with st.spinner("AI 둘이 싸우는 중..."):
+                turns = debate.run_debate(
+                    summary, personas.DEFAULT_PERSONAS,
+                    max_rounds=rounds, on_turn=render,
+                )
 
             st.subheader("판정")
             with st.spinner("판정관이 심사하는 중..."):

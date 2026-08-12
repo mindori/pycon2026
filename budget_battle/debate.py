@@ -6,6 +6,8 @@
   ③ 합의 감지    - 결론이 난 뒤의 무의미한 반복을 막는다
 """
 
+from collections.abc import Callable
+
 from budget_battle import client, config
 from budget_battle.models import DebateTurn
 from budget_battle.personas import Persona
@@ -36,7 +38,13 @@ def run_debate(
     personas: tuple[Persona, Persona],
     max_rounds: int = config.MAX_ROUNDS,
     max_calls: int = config.MAX_CALLS,
+    on_turn: Callable[[DebateTurn], None] | None = None,
 ) -> list[DebateTurn]:
+    """토론을 진행한다.
+
+    on_turn을 넘기면 발언이 하나 끝날 때마다 즉시 호출한다. 화면에 한 턴씩
+    보여주려면 필요하다 — 넘기지 않으면 전부 끝난 뒤 목록으로만 돌려준다.
+    """
     turns: list[DebateTurn] = []
 
     for _ in range(max_rounds):  # ① 하드 캡
@@ -46,6 +54,8 @@ def run_debate(
 
             turn = _speak(persona, ledger_summary, turns)
             turns = [*turns, turn]
+            if on_turn is not None:
+                on_turn(turn)
 
             if AGREEMENT_MARK in turn.message:  # ③ 수렴 감지
                 return turns
