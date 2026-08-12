@@ -21,7 +21,7 @@ MIN_PYTHON = (3, 11)
 # budget_battle/config.py의 MODEL_ID와 반드시 같은 값이어야 한다. check_env.py는
 # 의존성 설치 전에 실행되므로 config.py를 import할 수 없어(python-dotenv 필요)
 # 문자열로 중복 정의한다. 두 값이 어긋나면 tests/test_check_env.py가 잡는다.
-MODEL_ID = "gemini-3.5-flash"
+MODEL_ID = "gemini-3.6-flash"
 
 MODELS_URL = "https://generativelanguage.googleapis.com/v1beta/models?key={key}"
 GENERATE_URL = (
