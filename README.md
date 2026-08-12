@@ -96,8 +96,14 @@ Google Gemini API 키가 필요합니다. **무료이고 신용카드 등록이 
 
 키를 받으셨으면:
 
+**맥 · 리눅스**
 ```bash
 cp .env.example .env
+```
+
+**윈도우 (PowerShell)**
+```powershell
+copy .env.example .env
 ```
 
 그리고 만들어진 `.env` 파일을 편집기로 열어 발급받은 키를 붙여넣으세요.
@@ -196,7 +202,7 @@ uv run python main.py
 |---|---|
 | `command not found: uv` | 터미널을 닫았다가 다시 열어 보세요 |
 | `GOOGLE_API_KEY를 찾을 수 없습니다` | `.env` 파일을 만들고 키를 넣으셨는지 확인 (5번) |
-| `unsupported operand type(s) for \|` | 폴더를 옮기셨나요? `rm -rf .venv` 후 `uv sync` |
+| `unsupported operand type(s) for \|` | 폴더를 옮기셨나요? 가상환경을 지우고 다시 만드세요 → [설치 가이드](docs/prework/02-install.md) |
 | 실행이 멈춘 것 같아요 | 무료 티어 분당 한도입니다. 자동으로 다시 시도하니 잠시 기다리세요 |
 | 그 외 | [설치 가이드](docs/prework/02-install.md)의 문제 해결 절 |
 

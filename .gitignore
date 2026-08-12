@@ -7,3 +7,6 @@ __pycache__/
 .DS_Store
 receipts/private/
 receipts/raw/
+
+# 장표 — 당일 공개 후 별도 공유 예정
+slides/

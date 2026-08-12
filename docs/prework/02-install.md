@@ -80,8 +80,15 @@ uv sync
 코드 문제가 아니라 **가상환경이 깨진 것**입니다. 폴더 이름을 바꿨거나 다른 곳으로
 옮겼을 때 생깁니다. `models.py`를 잘못 친 것처럼 보이지만 아닙니다.
 
+**맥 · 리눅스**
 ```bash
 rm -rf .venv
+uv sync
+```
+
+**윈도우 (PowerShell)**
+```powershell
+Remove-Item -Recurse -Force .venv
 uv sync
 ```
 
