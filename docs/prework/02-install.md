@@ -54,16 +54,16 @@ uv --version
 저장소 주소를 안내받으셨다면 다음 명령으로 내려받습니다.
 
 ```bash
-git clone https://github.com/mindori/ai-budget-battle.git
-cd ai-budget-battle
+git clone https://github.com/mindori/pycon2026.git
+cd pycon2026
 ```
 
 `git`이 없다면 GitHub 페이지의 초록색 "Code" 버튼 → "Download ZIP"으로 받아서
-압축을 풀어도 됩니다. 이 경우 폴더 이름이 `ai-budget-battle`이 아니라 **`ai-budget-battle-main`**
+압축을 풀어도 됩니다. 이 경우 폴더 이름이 `pycon2026`이 아니라 **`pycon2026-main`**
 으로 만들어집니다.
 
 ```bash
-cd ai-budget-battle-main
+cd pycon2026-main
 ```
 
 ## 3) 의존성 설치
