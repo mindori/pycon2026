@@ -32,7 +32,8 @@ def get_api_key() -> str:
         raise RuntimeError(
             "GOOGLE_API_KEY를 찾을 수 없습니다.\n"
             "1) .env.example 파일을 복사해 .env 로 이름을 바꾸세요.\n"
-            "2) https://aistudio.google.com/apikey 에서 키를 발급받아 붙여넣으세요.\n"
+            "2) 강사가 메일로 보내드린 키를 그 안에 붙여넣으세요.\n"
+            "   메일이 안 왔으면 강사에게 알려 주세요.\n"
             "(GEMINI_API_KEY 라는 이름으로 넣어도 인식합니다.)"
         )
     return key
