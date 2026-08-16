@@ -1,0 +1,66 @@
+{
+  "store": "이마트에브리데이 이수점",
+  "purchased_at": "2026-08-02",
+  "items": [
+    {
+      "name": "* 자연주의 친환경 흙당",
+      "price": 3480,
+      "quantity": 1,
+      "category": "식비"
+    },
+    {
+      "name": "오리온 마켓오 크림치",
+      "price": 5280,
+      "quantity": 2,
+      "category": "카페/간식"
+    },
+    {
+      "name": "양념강정",
+      "price": 12980,
+      "quantity": 1,
+      "category": "식비"
+    },
+    {
+      "name": "일미 양념우엉 150g",
+      "price": 3680,
+      "quantity": 1,
+      "category": "식비"
+    },
+    {
+      "name": "*풀무원김밥김10매",
+      "price": 3480,
+      "quantity": 1,
+      "category": "식비"
+    },
+    {
+      "name": "[SPC]우유치즈롤",
+      "price": 4900,
+      "quantity": 1,
+      "category": "카페/간식"
+    },
+    {
+      "name": "롯데 칙촉 스윗콘 180",
+      "price": 4480,
+      "quantity": 1,
+      "category": "카페/간식"
+    },
+    {
+      "name": "크라운 빅파이 살구",
+      "price": 4480,
+      "quantity": 1,
+      "category": "카페/간식"
+    },
+    {
+      "name": "아이비모어딥치즈270g",
+      "price": 4480,
+      "quantity": 1,
+      "category": "카페/간식"
+    },
+    {
+      "name": "* 서울저지방우유1800ml",
+      "price": 6480,
+      "quantity": 1,
+      "category": "식비"
+    }
+  ]
+}

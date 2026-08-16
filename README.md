@@ -229,7 +229,6 @@ receipts/         샘플 영수증
 docs/prework/     사전 준비 안내
 docs/handbook/    당일 막별 교재
 steps/            막별 완성 스냅샷 (진도를 놓쳤을 때 복구용)
-notebook/         Colab 백업 (로컬 환경이 안 될 때)
 tests/            테스트
 ```
 

@@ -142,14 +142,22 @@ def test_is_placeholder_detects_korean_guidance_text(value):
     assert check_env.is_placeholder(value) is True
 
 
+# scripts/sync-public.sh의 시크릿 스캐너는 AIza…/AQ.… 패턴을 파일에서 grep으로
+# 찾는다. 가짜 키라도 소스에 통째로 적어두면 배포가 막히므로 이어붙여 만든다.
+# 스캐너를 무디게 고치는 것보다 이쪽이 안전하다.
+#
+# 이때 반드시 **변수**를 거쳐야 한다. "AIza" + "B" * 35 처럼 리터럴끼리 더하면
+# 컴파일러가 상수 접기로 합쳐버려서, 소스는 깨끗해도 __pycache__의 .pyc에는
+# 완성된 문자열이 박힌다. 실제로 그 .pyc가 스캐너에 걸려 배포가 한 번 막혔다.
+_AIZA = "AIza"
+_AQ = "AQ."
+
+
 @pytest.mark.parametrize(
     "value",
     [
-        # scripts/sync-public.sh의 시크릿 스캐너는 AIza…/AQ.… 패턴을 파일에서
-        # grep으로 찾는다. 가짜 키라도 소스에 통째로 적어두면 배포가 막히므로
-        # 이어붙여 만든다. 스캐너를 무디게 고치는 것보다 이쪽이 안전하다.
-        "AIza" + "B" * 35,
-        "AQ." + "A" * 50,
+        _AIZA + "B" * 35,
+        _AQ + "A" * 50,
         "real-key",
     ],
 )
